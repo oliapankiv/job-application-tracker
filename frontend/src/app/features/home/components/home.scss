@@ -1,0 +1,14 @@
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #eef1fb, #f5f6fa);
+  padding: 16px;
+}
+
+.home-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+}
