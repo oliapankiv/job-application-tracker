@@ -18,7 +18,7 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
-        loadComponent: () => import('./features/home/components/home').then((m) => m.Home)
+        loadComponent: () => import('./features/home/components/home/home').then((m) => m.Home)
       },
       {
         path: 'applications',

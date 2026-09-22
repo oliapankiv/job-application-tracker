@@ -2,9 +2,9 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../../../core/modules/auth/services/auth.service';
-import { DashboardService } from '../../dashboard/services/dashboard.service';
-import { DashboardStats } from '../../../shared/features/dashboard/models/dashboard.model';
+import { AuthService } from '../../../../core/modules/auth/services/auth.service';
+import { DashboardService } from '../../../dashboard/services/dashboard.service';
+import { DashboardStats } from '../../../../shared/features/dashboard/models/dashboard.model';
 
 interface ChartDatum {
   name: string;
