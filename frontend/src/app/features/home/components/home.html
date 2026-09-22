@@ -1,14 +1,79 @@
 <div class="home-page">
-  <mat-card class="home-card">
-    <mat-card-header>
-      <mat-card-title>You're signed in</mat-card-title>
-      <mat-card-subtitle>{{ currentUser()?.displayName || currentUser()?.email }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{ currentUser()?.email }}</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="logout()">Sign out</button>
-    </mat-card-actions>
-  </mat-card>
+  <header class="home-header">
+    <div>
+      <h1 class="page-title">
+        Welcome back{{ currentUser()?.displayName ? ', ' + currentUser()?.displayName : '' }}
+      </h1>
+      <p class="home-header__subtitle">{{ currentUser()?.email }}</p>
+    </div>
+    <button mat-stroked-button color="primary" (click)="logout()">Sign out</button>
+  </header>
+
+  @if (loading()) {
+    <div class="dashboard-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else if (stats(); as s) {
+    <div class="stat-grid">
+      <mat-card class="stat-tile">
+        <span class="stat-tile__value">{{ s.totalApplications }}</span>
+        <span class="stat-tile__label">Total applications</span>
+      </mat-card>
+      <mat-card class="stat-tile">
+        <span class="stat-tile__value">{{ s.applicationsThisMonth }}</span>
+        <span class="stat-tile__label">This month</span>
+      </mat-card>
+      <mat-card class="stat-tile">
+        <span class="stat-tile__value">{{ s.applicationsThisWeek }}</span>
+        <span class="stat-tile__label">This week</span>
+      </mat-card>
+      <mat-card class="stat-tile">
+        <span class="stat-tile__value">{{ s.responseRate }}%</span>
+        <span class="stat-tile__label">Response rate</span>
+      </mat-card>
+      <mat-card class="stat-tile">
+        <span class="stat-tile__value">{{ s.activeInterviews }}</span>
+        <span class="stat-tile__label">Active interviews</span>
+      </mat-card>
+      <mat-card class="stat-tile">
+        <span class="stat-tile__value">{{ s.offersReceived }}</span>
+        <span class="stat-tile__label">Offers received</span>
+      </mat-card>
+    </div>
+
+    <div class="chart-grid">
+      <mat-card class="chart-card">
+        <h2 class="chart-card__title">Applications per week</h2>
+        @if (weeklyData().length) {
+          <ngx-charts-bar-vertical
+            [results]="weeklyData()"
+            [scheme]="weeklyColorScheme"
+            [gradient]="false"
+            [xAxis]="true"
+            [yAxis]="true"
+            [roundEdges]="true"
+            [roundDomains]="true"
+            [barPadding]="8"
+          ></ngx-charts-bar-vertical>
+        }
+      </mat-card>
+
+      <mat-card class="chart-card">
+        <h2 class="chart-card__title">Status breakdown</h2>
+        @if (statusData().length) {
+          <ngx-charts-bar-horizontal
+            [results]="statusData()"
+            [scheme]="statusColorScheme"
+            [gradient]="false"
+            [xAxis]="true"
+            [yAxis]="true"
+            [roundEdges]="true"
+            [barPadding]="10"
+          ></ngx-charts-bar-horizontal>
+        } @else {
+          <p class="chart-card__empty">No applications yet.</p>
+        }
+      </mat-card>
+    </div>
+  }
 </div>
