@@ -1,0 +1,36 @@
+<h1 class="page-title">Kanban Board</h1>
+
+@if (loading()) {
+  <div class="board-loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else {
+  <div class="board" cdkDropListGroup>
+    @for (column of columns(); track column.status) {
+      <div class="board-column">
+        <div class="board-column__header">
+          <span>{{ column.label }}</span>
+          <span class="board-column__count">{{ column.items.length }}</span>
+        </div>
+        <div
+          class="board-column__list"
+          cdkDropList
+          [id]="dropId(column.status)"
+          [cdkDropListData]="column.items"
+          [cdkDropListConnectedTo]="connectedListIds"
+          (cdkDropListDropped)="drop($event, column.status)"
+        >
+          @for (app of column.items; track app.id) {
+            <mat-card class="board-card" cdkDrag (click)="openApplication(app)">
+              <p class="board-card__title">{{ app.jobTitle }}</p>
+              <p class="board-card__company">{{ app.companyName }}</p>
+              @if (app.location) {
+                <p class="board-card__meta">{{ app.location }}</p>
+              }
+            </mat-card>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

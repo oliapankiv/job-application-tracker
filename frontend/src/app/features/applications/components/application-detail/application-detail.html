@@ -1,0 +1,144 @@
+@if (loading()) {
+  <div class="detail-loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else if (application(); as app) {
+  <a [routerLink]="applicationsRoute" class="back-link">
+    <mat-icon>arrow_back</mat-icon>
+    Back to applications
+  </a>
+
+  <div class="detail-header">
+    <div>
+      <h1 class="detail-header__title">{{ app.jobTitle }}</h1>
+      <p class="detail-header__company">{{ app.companyName }}</p>
+      <app-status-badge [status]="app.status"></app-status-badge>
+    </div>
+    <div class="detail-header__actions">
+      <button mat-stroked-button (click)="openEditDialog()">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button mat-stroked-button color="warn" (click)="deleteApplication()">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <mat-card class="detail-card">
+      <h2 class="detail-card__title">Overview</h2>
+      <dl class="detail-list">
+        <dt>Source</dt>
+        <dd>{{ sourceLabels[app.source] }}</dd>
+        <dt>Work type</dt>
+        <dd>{{ workTypeLabels[app.workType] }}</dd>
+        <dt>Location</dt>
+        <dd>{{ app.location || '—' }}</dd>
+        <dt>Salary</dt>
+        <dd>{{ app.salary ? ('$' + app.salary) : '—' }}</dd>
+        <dt>Applied date</dt>
+        <dd>{{ app.appliedDate | date: 'mediumDate' }}</dd>
+        <dt>Job posting</dt>
+        <dd>
+          @if (app.jobPostingUrl) {
+            <a [href]="app.jobPostingUrl" target="_blank" rel="noopener">View posting</a>
+          } @else {
+            —
+          }
+        </dd>
+        <dt>Tags</dt>
+        <dd>{{ app.tags || '—' }}</dd>
+      </dl>
+      @if (app.notes) {
+        <p class="detail-notes">{{ app.notes }}</p>
+      }
+    </mat-card>
+
+    <mat-card class="detail-card">
+      <h2 class="detail-card__title">Update status</h2>
+      <mat-form-field appearance="outline" class="status-select">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="selectedStatus">
+          @for (option of statusOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="statusUpdating() || selectedStatus === app.status"
+        (click)="updateStatus()"
+      >
+        Update status
+      </button>
+
+      <h3 class="detail-card__subtitle">Timeline</h3>
+      <mat-list class="timeline">
+        @for (entry of app.statusHistory; track entry.id) {
+          <mat-list-item>
+            <span matListItemTitle>{{ ['Applied','Screening','Interview','Offer','Rejected'][entry.status] }}</span>
+            <span matListItemLine>{{ entry.changedAt | date: 'medium' }}@if (entry.note) { — {{ entry.note }} }</span>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card>
+
+    <mat-card class="detail-card">
+      <div class="detail-card__header">
+        <h2 class="detail-card__title">Contacts</h2>
+        <button mat-icon-button (click)="openAddContact()" matTooltip="Add contact">
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
+      @if (app.contacts.length === 0) {
+        <p class="detail-empty">No contacts yet.</p>
+      }
+      <mat-list>
+        @for (contact of app.contacts; track contact.id) {
+          <mat-list-item>
+            <span matListItemTitle>{{ contact.name }}@if (contact.role) { — {{ contact.role }} }</span>
+            <span matListItemLine>{{ contact.email }} {{ contact.phone }}</span>
+            <button mat-icon-button matListItemMeta (click)="deleteContact(contact.id)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card>
+
+    <mat-card class="detail-card">
+      <div class="detail-card__header">
+        <h2 class="detail-card__title">Reminders</h2>
+        <button mat-icon-button (click)="openAddReminder()" matTooltip="Add reminder">
+          <mat-icon>add_alert</mat-icon>
+        </button>
+      </div>
+      @if (app.reminders.length === 0) {
+        <p class="detail-empty">No reminders yet.</p>
+      }
+      <mat-list>
+        @for (reminder of app.reminders; track reminder.id) {
+          <mat-list-item [class.reminder--done]="reminder.isCompleted">
+            <span matListItemTitle>{{ reminder.message }}</span>
+            <span matListItemLine>Due {{ reminder.dueDate | date: 'mediumDate' }}</span>
+            <div matListItemMeta class="reminder-actions">
+              <button
+                mat-icon-button
+                (click)="toggleReminderComplete(reminder.id, reminder.isCompleted, reminder.dueDate, reminder.message)"
+                matTooltip="Toggle complete"
+              >
+                <mat-icon>{{ reminder.isCompleted ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteReminder(reminder.id)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card>
+  </div>
+}

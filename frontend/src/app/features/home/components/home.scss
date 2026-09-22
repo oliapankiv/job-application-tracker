@@ -1,26 +1,10 @@
-.home-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #eef1fb, #f5f6fa);
-  padding: 32px;
-}
-
 .home-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
   margin-bottom: 24px;
 }
 
 .home-header__subtitle {
   margin: 4px 0 0;
   color: rgba(0, 0, 0, 0.6);
-}
-
-.home-header__actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .page-title {

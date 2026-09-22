@@ -1,15 +1,9 @@
 <div class="home-page">
   <header class="home-header">
-    <div>
-      <h1 class="page-title">
-        Welcome back{{ currentUser()?.displayName ? ', ' + currentUser()?.displayName : '' }}
-      </h1>
-      <p class="home-header__subtitle">{{ currentUser()?.email }}</p>
-    </div>
-    <div class="home-header__actions">
-      <a mat-raised-button color="primary" [routerLink]="applicationsRoute">Applications</a>
-      <button mat-stroked-button color="primary" (click)="logout()">Sign out</button>
-    </div>
+    <h1 class="page-title">
+      Welcome back{{ currentUser()?.displayName ? ', ' + currentUser()?.displayName : '' }}
+    </h1>
+    <p class="home-header__subtitle">{{ currentUser()?.email }}</p>
   </header>
 
   @if (loading()) {

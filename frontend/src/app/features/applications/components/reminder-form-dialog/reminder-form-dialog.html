@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add reminder</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="reminder-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Due date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dueDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Message</mat-label>
+      <input matInput formControlName="message" />
+      @if (form.controls.message.hasError('required') && form.controls.message.touched) {
+        <mat-error>Message is required</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()">Add reminder</button>
+</mat-dialog-actions>

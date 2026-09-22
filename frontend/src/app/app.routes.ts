@@ -11,16 +11,39 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/components/register/register').then((m) => m.Register)
   },
   {
-    path: 'home',
-    loadComponent: () => import('./features/home/components/home').then((m) => m.Home),
-    canActivate: [authGuard]
+    path: '',
+    loadComponent: () => import('./shared/layout/shell/shell').then((m) => m.Shell),
+    canActivate: [authGuard],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
+      {
+        path: 'home',
+        loadComponent: () => import('./features/home/components/home').then((m) => m.Home)
+      },
+      {
+        path: 'applications',
+        loadComponent: () =>
+          import('./features/applications/components/application-list/application-list').then(
+            (m) => m.ApplicationList
+          )
+      },
+      {
+        path: 'applications/:id',
+        loadComponent: () =>
+          import('./features/applications/components/application-detail/application-detail').then(
+            (m) => m.ApplicationDetail
+          )
+      },
+      {
+        path: 'board',
+        loadComponent: () =>
+          import('./features/applications/components/kanban-board/kanban-board').then((m) => m.KanbanBoard)
+      },
+      {
+        path: 'reminders',
+        loadComponent: () => import('./features/reminders/components/reminders/reminders').then((m) => m.Reminders)
+      }
+    ]
   },
-  {
-    path: 'applications',
-    loadComponent: () =>
-      import('./features/applications/components/application-list/application-list').then((m) => m.ApplicationList),
-    canActivate: [authGuard]
-  },
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', redirectTo: 'login' }
 ];

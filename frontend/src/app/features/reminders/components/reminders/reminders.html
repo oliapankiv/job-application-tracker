@@ -1,0 +1,31 @@
+<h1 class="page-title">Upcoming reminders</h1>
+
+@if (loading()) {
+  <div class="reminders-loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else if (reminders().length === 0) {
+  <p class="reminders-empty">You're all caught up — no upcoming follow-ups.</p>
+} @else {
+  <mat-card>
+    <mat-list>
+      @for (reminder of reminders(); track reminder.id) {
+        <mat-list-item [class.reminder--overdue]="isOverdue(reminder.dueDate)">
+          <mat-icon matListItemIcon>{{ isOverdue(reminder.dueDate) ? 'warning' : 'schedule' }}</mat-icon>
+          <span matListItemTitle (click)="goToApplication(reminder)" class="reminder-title">
+            {{ reminder.message }} — {{ reminder.companyName }} ({{ reminder.jobTitle }})
+          </span>
+          <span matListItemLine>Due {{ reminder.dueDate | date: 'mediumDate' }}</span>
+          <div matListItemMeta class="reminder-actions">
+            <button mat-icon-button matTooltip="Mark complete" (click)="complete(reminder)">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Dismiss" (click)="remove(reminder)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </mat-card>
+}

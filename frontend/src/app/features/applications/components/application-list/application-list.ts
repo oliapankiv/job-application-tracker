@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +17,7 @@ import { ApplicationStatus, JobApplication, STATUS_LABELS } from '../../../../co
 import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { ConfirmDialog } from '../../../../shared/components/confirm-dialog/confirm-dialog';
 import { ApplicationForm } from '../application-form/application-form';
+import { ApplicationsRoute } from '../../../../shared/features/applications/routes/applications.route';
 
 @Component({
   selector: 'app-application-list',
@@ -56,7 +58,8 @@ export class ApplicationList implements OnInit {
 
   constructor(
     private applicationService: ApplicationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -82,14 +85,16 @@ export class ApplicationList implements OnInit {
     });
   }
 
-  openEditDialog(app: JobApplication): void {
+  openEditDialog(app: JobApplication, event: Event): void {
+    event.stopPropagation();
     const ref = this.dialog.open(ApplicationForm, { data: { application: app }, width: '520px' });
     ref.afterClosed().subscribe((updated) => {
       if (updated) this.load();
     });
   }
 
-  deleteApplication(app: JobApplication): void {
+  deleteApplication(app: JobApplication, event: Event): void {
+    event.stopPropagation();
     const ref = this.dialog.open(ConfirmDialog, {
       data: {
         title: 'Delete application',
@@ -103,5 +108,9 @@ export class ApplicationList implements OnInit {
         this.applicationService.deleteApplication(app.id).subscribe(() => this.load());
       }
     });
+  }
+
+  viewApplication(app: JobApplication): void {
+    this.router.navigate([ApplicationsRoute.Detail(app.id)]);
   }
 }
