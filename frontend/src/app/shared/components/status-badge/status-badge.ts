@@ -1,4 +1,4 @@
-import { Component, computed, input, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { ApplicationStatus, STATUS_LABELS } from '../../../core/models/application.model';
 
 @Component({

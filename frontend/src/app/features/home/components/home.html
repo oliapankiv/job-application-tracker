@@ -60,7 +60,7 @@
         @if (statusData().length) {
           <ngx-charts-bar-horizontal
             [results]="statusData()"
-            [scheme]="statusColorScheme"
+            [scheme]="statusColorScheme()"
             [gradient]="false"
             [xAxis]="true"
             [yAxis]="true"

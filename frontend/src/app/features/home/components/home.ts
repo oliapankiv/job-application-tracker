@@ -44,12 +44,12 @@ export class Home implements OnInit {
     domain: ['#2a78d6']
   };
 
-  statusColorScheme: Color = {
+  readonly statusColorScheme = signal<Color>({
     name: 'status',
     selectable: false,
     group: ScaleType.Ordinal,
     domain: []
-  };
+  });
 
   ngOnInit(): void {
     this.dashboardService.getStats().subscribe((stats) => {
@@ -63,12 +63,12 @@ export class Home implements OnInit {
 
       const statusEntries = stats.statusBreakdown.filter((s) => s.count > 0);
       this.statusData.set(statusEntries.map((s) => ({ name: s.status, value: s.count })));
-      this.statusColorScheme = {
+      this.statusColorScheme.set({
         name: 'status',
         selectable: false,
         group: ScaleType.Ordinal,
         domain: statusEntries.map((s) => STATUS_COLOR_MAP[s.status] ?? '#2a78d6')
-      };
+      });
 
       this.loading.set(false);
     });
