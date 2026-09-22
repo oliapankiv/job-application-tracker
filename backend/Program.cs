@@ -69,6 +69,7 @@ builder.Services.AddAuthorization();
 // Application services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IApplicationService, ApplicationService>();
 
 // Validation
 builder.Services.AddFluentValidationAutoValidation();

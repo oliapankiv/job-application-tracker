@@ -15,6 +15,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/components/home').then((m) => m.Home),
     canActivate: [authGuard]
   },
+  {
+    path: 'applications',
+    loadComponent: () =>
+      import('./features/applications/components/application-list/application-list').then((m) => m.ApplicationList),
+    canActivate: [authGuard]
+  },
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', redirectTo: 'login' }
 ];

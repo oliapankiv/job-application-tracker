@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -6,6 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../../../core/modules/auth/services/auth.service';
 import { DashboardService } from '../../../core/modules/dashboard/services/dashboard.service';
 import { DashboardStats } from '../../../core/models/dashboard.model';
+import { ApplicationsRoute } from '../../../shared/features/applications/routes/applications.route';
 
 interface ChartDatum {
   name: string;
@@ -23,7 +25,7 @@ const STATUS_COLOR_MAP: Record<string, string> = {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatProgressSpinnerModule, NgxChartsModule],
+  imports: [MatCardModule, MatButtonModule, MatProgressSpinnerModule, NgxChartsModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -31,6 +33,7 @@ export class Home implements OnInit {
   private authService = inject(AuthService);
   private dashboardService = inject(DashboardService);
 
+  readonly applicationsRoute = ApplicationsRoute.Main;
   readonly currentUser = this.authService.currentUser;
 
   readonly loading = signal(true);

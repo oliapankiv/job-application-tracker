@@ -1,0 +1,23 @@
+.app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 420px;
+  padding-top: 4px;
+}
+
+.app-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .app-form {
+    min-width: 0;
+  }
+
+  .app-form__row {
+    grid-template-columns: 1fr;
+  }
+}

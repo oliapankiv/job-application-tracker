@@ -1,0 +1,86 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit application' : 'New application' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="app-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Company name</mat-label>
+      <input matInput formControlName="companyName" />
+      @if (form.controls.companyName.hasError('required') && form.controls.companyName.touched) {
+        <mat-error>Company name is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Job title</mat-label>
+      <input matInput formControlName="jobTitle" />
+      @if (form.controls.jobTitle.hasError('required') && form.controls.jobTitle.touched) {
+        <mat-error>Job title is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Job posting URL</mat-label>
+      <input matInput formControlName="jobPostingUrl" />
+    </mat-form-field>
+
+    <div class="app-form__row">
+      <mat-form-field appearance="outline">
+        <mat-label>Source</mat-label>
+        <mat-select formControlName="source">
+          @for (option of sourceOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Work type</mat-label>
+        <mat-select formControlName="workType">
+          @for (option of workTypeOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="app-form__row">
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Salary</mat-label>
+        <input matInput type="number" formControlName="salary" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Applied date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="appliedDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tags (comma separated)</mat-label>
+      <input matInput formControlName="tags" placeholder="e.g. dream-job, startup" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="saving()" (click)="submit()">
+    @if (saving()) {
+      <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+      {{ isEdit ? 'Save changes' : 'Create application' }}
+    }
+  </button>
+</mat-dialog-actions>

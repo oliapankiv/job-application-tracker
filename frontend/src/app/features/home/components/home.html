@@ -6,7 +6,10 @@
       </h1>
       <p class="home-header__subtitle">{{ currentUser()?.email }}</p>
     </div>
-    <button mat-stroked-button color="primary" (click)="logout()">Sign out</button>
+    <div class="home-header__actions">
+      <a mat-raised-button color="primary" [routerLink]="applicationsRoute">Applications</a>
+      <button mat-stroked-button color="primary" (click)="logout()">Sign out</button>
+    </div>
   </header>
 
   @if (loading()) {

@@ -17,6 +17,12 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+.home-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .page-title {
   margin: 0;
   font-size: 24px;
