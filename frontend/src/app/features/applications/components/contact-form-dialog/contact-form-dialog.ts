@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CreateContact } from '../../../../core/models/application.model';
+import { CreateContact } from '../../models/application.model';
 
 @Component({
   selector: 'app-contact-form-dialog',

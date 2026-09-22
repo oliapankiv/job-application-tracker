@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { environment } from '../../../../../environments/environment';
 import { AuthResponse, LoginRequest, RegisterRequest } from '../models/auth.model';
 import { AuthRoute } from '../../../../shared/features/auth/routes/auth.route';
 import { AuthConfig } from '../configs/auth.config';
@@ -34,13 +33,13 @@ export class AuthService {
   }
 
   register(data: RegisterRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${environment.apiUrl}${AuthConfig.REGISTER}`, data).pipe(
+    return this.http.post<AuthResponse>(AuthConfig.REGISTER, data).pipe(
       tap((response) => this.setAuth(response))
     );
   }
 
   login(data: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${environment.apiUrl}${AuthConfig.LOGIN}`, data).pipe(
+    return this.http.post<AuthResponse>(AuthConfig.LOGIN, data).pipe(
       tap((response) => this.setAuth(response))
     );
   }

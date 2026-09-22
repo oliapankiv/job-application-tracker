@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../../environments/environment';
 import {
   ApplicationStatus,
   CreateJobApplication,
@@ -11,7 +10,7 @@ import {
   StatusHistoryEntry,
   UpdateJobApplication,
   UpdateStatusRequest
-} from '../../../models/application.model';
+} from '../models/application.model';
 import { ApplicationsConfig } from '../configs/application.config';
 
 export interface ApplicationFilters {
@@ -26,8 +25,6 @@ export interface ApplicationFilters {
 
 @Injectable({ providedIn: 'root' })
 export class ApplicationService {
-  private readonly baseUrl = `${environment.apiUrl}${ApplicationsConfig.BASE}`;
-
   constructor(private http: HttpClient) {}
 
   getApplications(filters: ApplicationFilters = {}): Observable<PagedResult<JobApplication>> {
@@ -43,30 +40,30 @@ export class ApplicationService {
     params = params.set('page', filters.page ?? 1);
     params = params.set('pageSize', filters.pageSize ?? 100);
 
-    return this.http.get<PagedResult<JobApplication>>(this.baseUrl, { params });
+    return this.http.get<PagedResult<JobApplication>>(ApplicationsConfig.BASE, { params });
   }
 
   getApplication(id: number): Observable<JobApplicationDetail> {
-    return this.http.get<JobApplicationDetail>(`${this.baseUrl}/${id}`);
+    return this.http.get<JobApplicationDetail>(`${ApplicationsConfig.BASE}/${id}`);
   }
 
   createApplication(dto: CreateJobApplication): Observable<JobApplication> {
-    return this.http.post<JobApplication>(this.baseUrl, dto);
+    return this.http.post<JobApplication>(ApplicationsConfig.BASE, dto);
   }
 
   updateApplication(id: number, dto: UpdateJobApplication): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${id}`, dto);
+    return this.http.put<void>(`${ApplicationsConfig.BASE}/${id}`, dto);
   }
 
   deleteApplication(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${ApplicationsConfig.BASE}/${id}`);
   }
 
   updateStatus(id: number, dto: UpdateStatusRequest): Observable<void> {
-    return this.http.patch<void>(`${this.baseUrl}/${id}/status`, dto);
+    return this.http.patch<void>(`${ApplicationsConfig.BASE}/${id}/status`, dto);
   }
 
   getHistory(id: number): Observable<StatusHistoryEntry[]> {
-    return this.http.get<StatusHistoryEntry[]>(`${this.baseUrl}/${id}/history`);
+    return this.http.get<StatusHistoryEntry[]>(`${ApplicationsConfig.BASE}/${id}/history`);
   }
 }

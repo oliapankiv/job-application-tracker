@@ -11,16 +11,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
-import { ApplicationService } from '../../../../core/modules/applications/services/application.service';
-import { ContactService } from '../../../../core/modules/contacts/services/contact.service';
-import { ReminderService } from '../../../../core/modules/reminders/services/reminder.service';
+import { ApplicationService } from '../../services/application.service';
+import { ContactService } from '../../../contacts/services/contact.service';
+import { ReminderService } from '../../../../shared/features/reminders/services/reminder.service';
 import {
   ApplicationStatus,
   JobApplicationDetail,
   SOURCE_LABELS,
   STATUS_LABELS,
   WORK_TYPE_LABELS
-} from '../../../../core/models/application.model';
+} from '../../models/application.model';
 import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { ConfirmDialog } from '../../../../shared/components/confirm-dialog/confirm-dialog';
 import { ApplicationsRoute } from '../../../../shared/features/applications/routes/applications.route';

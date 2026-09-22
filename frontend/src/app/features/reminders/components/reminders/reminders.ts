@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ReminderService } from '../../../../core/modules/reminders/services/reminder.service';
-import { Reminder } from '../../../../core/models/application.model';
+import { ReminderService } from '../../../../shared/features/reminders/services/reminder.service';
+import { Reminder } from '../../../applications/models/application.model';
 import { ApplicationsRoute } from '../../../../shared/features/applications/routes/applications.route';
 
 @Component({

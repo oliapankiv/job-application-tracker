@@ -9,14 +9,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ApplicationService } from '../../../../core/modules/applications/services/application.service';
+import { ApplicationService } from '../../services/application.service';
 import {
   ApplicationSource,
   JobApplication,
   SOURCE_LABELS,
   WORK_TYPE_LABELS,
   WorkType
-} from '../../../../core/models/application.model';
+} from '../../models/application.model';
 
 export interface ApplicationFormData {
   application?: JobApplication | null;
