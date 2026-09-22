@@ -20,7 +20,7 @@ import {
   SOURCE_LABELS,
   STATUS_LABELS,
   WORK_TYPE_LABELS
-} from '../../models/application.model';
+} from '../../../../shared/features/application/models/application.model';
 import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { ConfirmDialog } from '../../../../shared/components/confirm-dialog/confirm-dialog';
 import { ApplicationRoute } from '../../../../shared/features/application/routes/application.route';

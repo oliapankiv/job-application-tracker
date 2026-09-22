@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DashboardStats } from '../models/dashboard.model';
+import { DashboardStats } from '../../../shared/features/dashboard/models/dashboard.model';
 import { DashboardConfig } from '../configs/dashboard.config';
 
 @Injectable({ providedIn: 'root' })

@@ -1,3 +1,5 @@
+import { Reminder } from '../../reminder/models/reminder.model';
+
 export enum ApplicationStatus {
   Applied = 0,
   Screening = 1,
@@ -57,6 +59,22 @@ export interface StatusHistoryEntry {
   status: ApplicationStatus;
   changedAt: string;
   note?: string | null;
+}
+
+export interface JobApplication {
+  id: number;
+  companyName: string;
+  jobTitle: string;
+  jobPostingUrl?: string | null;
+  status: ApplicationStatus;
+  source: ApplicationSource;
+  salary?: number | null;
+  location?: string | null;
+  workType: WorkType;
+  appliedDate: string;
+  lastUpdated: string;
+  notes?: string | null;
+  tags?: string | null;
 }
 
 export interface CreateJobApplication {
@@ -120,4 +138,11 @@ export interface JobDocument {
   filePath: string;
   documentType: DocumentType;
   uploadedAt: string;
+}
+
+export interface JobApplicationDetail extends JobApplication {
+  statusHistory: StatusHistoryEntry[];
+  contacts: Contact[];
+  reminders: Reminder[];
+  documents: JobDocument[];
 }

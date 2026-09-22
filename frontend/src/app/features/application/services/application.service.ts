@@ -10,7 +10,7 @@ import {
   StatusHistoryEntry,
   UpdateJobApplication,
   UpdateStatusRequest
-} from '../models/application.model';
+} from '../../../shared/features/application/models/application.model';
 import { ApplicationConfig } from '../configs/application.config';
 
 export interface ApplicationFilters {

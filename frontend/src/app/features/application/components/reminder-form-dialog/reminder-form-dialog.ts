@@ -6,7 +6,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CreateReminder } from '../../models/application.model';
+import { CreateReminder } from '../../../../shared/features/reminder/models/reminder.model';
 
 @Component({
   selector: 'app-reminder-form-dialog',

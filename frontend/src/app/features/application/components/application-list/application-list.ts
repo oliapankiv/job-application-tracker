@@ -13,7 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime } from 'rxjs';
 import { ApplicationService } from '../../services/application.service';
-import { ApplicationStatus, JobApplication, STATUS_LABELS } from '../../models/application.model';
+import { ApplicationStatus, JobApplication, STATUS_LABELS } from '../../../../shared/features/application/models/application.model';
 import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { ConfirmDialog } from '../../../../shared/components/confirm-dialog/confirm-dialog';
 import { ApplicationForm } from '../application-form/application-form';

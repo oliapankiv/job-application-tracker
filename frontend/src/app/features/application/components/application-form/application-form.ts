@@ -16,7 +16,7 @@ import {
   SOURCE_LABELS,
   WORK_TYPE_LABELS,
   WorkType
-} from '../../models/application.model';
+} from '../../../../shared/features/application/models/application.model';
 
 export interface ApplicationFormData {
   application?: JobApplication | null;

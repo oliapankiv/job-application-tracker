@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ApplicationService } from '../../services/application.service';
-import { ApplicationStatus, JobApplication, STATUS_LABELS } from '../../models/application.model';
+import { ApplicationStatus, JobApplication, STATUS_LABELS } from '../../../../shared/features/application/models/application.model';
 import { ApplicationRoute } from '../../../../shared/features/application/routes/application.route';
 
 interface KanbanColumn {
