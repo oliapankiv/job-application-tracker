@@ -40,30 +40,30 @@ export class ApplicationService {
     params = params.set('page', filters.page ?? 1);
     params = params.set('pageSize', filters.pageSize ?? 100);
 
-    return this.http.get<PagedResult<JobApplication>>(ApplicationConfig.BASE, { params });
+    return this.http.get<PagedResult<JobApplication>>(ApplicationConfig.LIST, { params });
   }
 
   getApplication(id: number): Observable<JobApplicationDetail> {
-    return this.http.get<JobApplicationDetail>(`${ApplicationConfig.BASE}/${id}`);
+    return this.http.get<JobApplicationDetail>(ApplicationConfig.ITEM(id));
   }
 
   createApplication(dto: CreateJobApplication): Observable<JobApplication> {
-    return this.http.post<JobApplication>(ApplicationConfig.BASE, dto);
+    return this.http.post<JobApplication>(ApplicationConfig.LIST, dto);
   }
 
   updateApplication(id: number, dto: UpdateJobApplication): Observable<void> {
-    return this.http.put<void>(`${ApplicationConfig.BASE}/${id}`, dto);
+    return this.http.put<void>(ApplicationConfig.ITEM(id), dto);
   }
 
   deleteApplication(id: number): Observable<void> {
-    return this.http.delete<void>(`${ApplicationConfig.BASE}/${id}`);
+    return this.http.delete<void>(ApplicationConfig.ITEM(id));
   }
 
   updateStatus(id: number, dto: UpdateStatusRequest): Observable<void> {
-    return this.http.patch<void>(`${ApplicationConfig.BASE}/${id}/status`, dto);
+    return this.http.patch<void>(ApplicationConfig.STATUS(id), dto);
   }
 
   getHistory(id: number): Observable<StatusHistoryEntry[]> {
-    return this.http.get<StatusHistoryEntry[]>(`${ApplicationConfig.BASE}/${id}/history`);
+    return this.http.get<StatusHistoryEntry[]>(ApplicationConfig.HISTORY(id));
   }
 }
