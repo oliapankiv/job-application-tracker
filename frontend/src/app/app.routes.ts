@@ -12,7 +12,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./shared/layout/shell/shell').then((m) => m.Shell),
+    loadComponent: () => import('./shared/layout/components/layout').then((m) => m.Layout),
     canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },

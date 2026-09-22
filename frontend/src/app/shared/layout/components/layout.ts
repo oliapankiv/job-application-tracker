@@ -11,7 +11,7 @@ import { ApplicationsRoute } from '../../features/applications/routes/applicatio
 import { RemindersRoute } from '../../features/reminders/routes/reminders.route';
 
 @Component({
-  selector: 'app-shell',
+  selector: 'app-layout',
   standalone: true,
   imports: [
     RouterOutlet,
@@ -23,10 +23,10 @@ import { RemindersRoute } from '../../features/reminders/routes/reminders.route'
     MatIconModule,
     MatButtonModule
   ],
-  templateUrl: './shell.html',
-  styleUrl: './shell.scss'
+  templateUrl: './layout.html',
+  styleUrl: './layout.scss'
 })
-export class Shell {
+export class Layout {
   readonly navLinks = [
     { path: HomeRoute.Main, label: 'Home', icon: 'home' },
     { path: ApplicationsRoute.Main, label: 'Applications', icon: 'list_alt' },
