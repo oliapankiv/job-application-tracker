@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,6 +42,7 @@ import { ApplicationRoute } from '../../../../shared/features/application/routes
 })
 export class ApplicationList implements OnInit {
   private fb = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   readonly loading = signal(true);
   readonly applications = signal<JobApplication[]>([]);
@@ -65,7 +67,9 @@ export class ApplicationList implements OnInit {
   ngOnInit(): void {
     this.load();
 
-    this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => this.load());
+    this.filterForm.valueChanges
+      .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.load());
   }
 
   load(): void {
