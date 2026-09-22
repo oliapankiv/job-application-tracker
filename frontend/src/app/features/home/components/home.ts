@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../../../core/modules/auth/services/auth.service';
-import { DashboardService } from '../../../core/services/dashboard.service';
+import { DashboardService } from '../../../core/modules/dashboard/services/dashboard.service';
 import { DashboardStats } from '../../../core/models/dashboard.model';
 
 interface ChartDatum {
