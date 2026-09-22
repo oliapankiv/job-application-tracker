@@ -7,17 +7,17 @@ export abstract class ApplicationConfig {
   /**
 	 * @methods GET | PUT | DELETE
 	 */
-	public static readonly ITEM = (id: number) => `applications/${id}`;
+	public static readonly ITEM = (id: number) => `/applications/${id}`;
 
 
   /**
 	 * @methods PATCH
 	 */
-	public static readonly STATUS = (id: number) => `applications/${id}/status`;
+	public static readonly STATUS = (id: number) => `/applications/${id}/status`;
 
 
   /**
 	 * @methods GET
 	 */
-	public static readonly HISTORY = (id: number) => `applications/${id}/history`;
+	public static readonly HISTORY = (id: number) => `/applications/${id}/history`;
 }
