@@ -12,7 +12,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./shared/layout/components/layout').then((m) => m.Layout),
+    loadComponent: () => import('./shared/components/layout/layout').then((m) => m.Layout),
     canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -23,25 +23,25 @@ export const routes: Routes = [
       {
         path: 'applications',
         loadComponent: () =>
-          import('./features/applications/components/application-list/application-list').then(
+          import('./features/application/components/application-list/application-list').then(
             (m) => m.ApplicationList
           )
       },
       {
         path: 'applications/:id',
         loadComponent: () =>
-          import('./features/applications/components/application-detail/application-detail').then(
+          import('./features/application/components/application-detail/application-detail').then(
             (m) => m.ApplicationDetail
           )
       },
       {
         path: 'board',
         loadComponent: () =>
-          import('./features/applications/components/kanban-board/kanban-board').then((m) => m.KanbanBoard)
+          import('./features/application/components/kanban-board/kanban-board').then((m) => m.KanbanBoard)
       },
       {
         path: 'reminders',
-        loadComponent: () => import('./features/reminders/components/reminders/reminders').then((m) => m.Reminders)
+        loadComponent: () => import('./features/reminder/components/reminder/reminder').then((m) => m.Reminder)
       }
     ]
   },

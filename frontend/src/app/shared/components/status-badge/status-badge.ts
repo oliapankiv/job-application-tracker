@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { ApplicationStatus, STATUS_LABELS } from '../../../features/applications/models/application.model';
+import { ApplicationStatus, STATUS_LABELS } from '../../../features/application/models/application.model';
 
 @Component({
   selector: 'app-status-badge',
