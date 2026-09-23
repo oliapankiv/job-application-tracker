@@ -42,11 +42,22 @@ export class KanbanBoard implements OnInit {
 
   load(): void {
     this.loading.set(true);
-    this.applicationService.getApplications({ pageSize: 200 }).subscribe((result) => {
+    this.fetchAll();
+  }
+
+  private fetchAll(cursor: string | null = null, accumulated: JobApplication[] = []): void {
+    this.applicationService.getApplications({ pageSize: 100, cursor }).subscribe((result) => {
+      const items = [...accumulated, ...result.items];
+
+      if (result.hasMore && result.nextCursor) {
+        this.fetchAll(result.nextCursor, items);
+        return;
+      }
+
       const columns: KanbanColumn[] = Object.entries(STATUS_LABELS).map(([value, label]) => ({
         status: Number(value) as ApplicationStatus,
         label,
-        items: result.items.filter((app) => app.status === Number(value))
+        items: items.filter((app) => app.status === Number(value))
       }));
       this.columns.set(columns);
       this.loading.set(false);

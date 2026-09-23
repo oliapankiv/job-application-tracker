@@ -68,4 +68,4 @@ public record UpdateStatusDto(ApplicationStatus Status, string? Note);
 
 public record StatusHistoryDto(int Id, ApplicationStatus Status, DateTime ChangedAt, string? Note);
 
-public record PagedResult<T>(List<T> Items, int TotalCount, int Page, int PageSize);
+public record CursorPagedResult<T>(List<T> Items, string? NextCursor, bool HasMore);

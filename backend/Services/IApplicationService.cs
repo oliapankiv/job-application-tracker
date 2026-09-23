@@ -5,9 +5,9 @@ namespace JobTracker.Api.Services;
 
 public interface IApplicationService
 {
-    Task<PagedResult<ApplicationDto>> GetApplicationsAsync(
+    Task<CursorPagedResult<ApplicationDto>> GetApplicationsAsync(
         string userId, ApplicationStatus? status, string? search, string? tag,
-        DateTime? fromDate, DateTime? toDate, int page, int pageSize);
+        DateTime? fromDate, DateTime? toDate, string? cursor, int pageSize);
 
     Task<ApplicationDetailDto?> GetApplicationByIdAsync(string userId, int id);
 

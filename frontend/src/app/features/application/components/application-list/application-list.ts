@@ -45,8 +45,11 @@ export class ApplicationList implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   readonly loading = signal(true);
+  readonly loadingMore = signal(false);
   readonly applications = signal<JobApplication[]>([]);
+  readonly hasMore = signal(false);
   readonly displayedColumns = ['companyName', 'jobTitle', 'status', 'workType', 'appliedDate', 'actions'];
+  private nextCursor: string | null = null;
 
   readonly statusOptions = Object.entries(STATUS_LABELS).map(([value, label]) => ({
     value: Number(value) as ApplicationStatus,
@@ -74,11 +77,28 @@ export class ApplicationList implements OnInit {
 
   load(): void {
     this.loading.set(true);
+    this.nextCursor = null;
     const { search, status } = this.filterForm.getRawValue();
 
     this.applicationService.getApplications({ search: search || null, status }).subscribe((result) => {
       this.applications.set(result.items);
+      this.nextCursor = result.nextCursor;
+      this.hasMore.set(result.hasMore);
       this.loading.set(false);
+    });
+  }
+
+  loadMore(): void {
+    if (!this.hasMore() || this.loadingMore() || !this.nextCursor) return;
+
+    this.loadingMore.set(true);
+    const { search, status } = this.filterForm.getRawValue();
+
+    this.applicationService.getApplications({ search: search || null, status, cursor: this.nextCursor }).subscribe((result) => {
+      this.applications.update((current) => [...current, ...result.items]);
+      this.nextCursor = result.nextCursor;
+      this.hasMore.set(result.hasMore);
+      this.loadingMore.set(false);
     });
   }
 

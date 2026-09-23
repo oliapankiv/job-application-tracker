@@ -9,16 +9,16 @@ namespace JobTracker.Api.Controllers;
 public class ApplicationsController(IApplicationService applicationService) : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<PagedResult<ApplicationDto>>> GetApplications(
+    public async Task<ActionResult<CursorPagedResult<ApplicationDto>>> GetApplications(
         [FromQuery] ApplicationStatus? status,
         [FromQuery] string? search,
         [FromQuery] string? tag,
         [FromQuery] DateTime? fromDate,
         [FromQuery] DateTime? toDate,
-        [FromQuery] int page = 1,
+        [FromQuery] string? cursor,
         [FromQuery] int pageSize = 20)
     {
-        var result = await applicationService.GetApplicationsAsync(UserId, status, search, tag, fromDate, toDate, page, pageSize);
+        var result = await applicationService.GetApplicationsAsync(UserId, status, search, tag, fromDate, toDate, cursor, pageSize);
         return Ok(result);
     }
 

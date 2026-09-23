@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import {
   ApplicationStatus,
   CreateJobApplication,
+  CursorPagedResult,
   JobApplication,
   JobApplicationDetail,
-  PagedResult,
   StatusHistoryEntry,
   UpdateJobApplication,
   UpdateStatusRequest
@@ -19,7 +19,7 @@ export interface ApplicationFilters {
   tag?: string | null;
   fromDate?: string | null;
   toDate?: string | null;
-  page?: number;
+  cursor?: string | null;
   pageSize?: number;
 }
 
@@ -27,7 +27,7 @@ export interface ApplicationFilters {
 export class ApplicationService {
   constructor(private http: HttpClient) {}
 
-  getApplications(filters: ApplicationFilters = {}): Observable<PagedResult<JobApplication>> {
+  getApplications(filters: ApplicationFilters = {}): Observable<CursorPagedResult<JobApplication>> {
     let params = new HttpParams();
     if (filters.status !== undefined && filters.status !== null) {
       params = params.set('status', filters.status);
@@ -36,11 +36,11 @@ export class ApplicationService {
     if (filters.tag) params = params.set('tag', filters.tag);
     if (filters.fromDate) params = params.set('fromDate', filters.fromDate);
     if (filters.toDate) params = params.set('toDate', filters.toDate);
+    if (filters.cursor) params = params.set('cursor', filters.cursor);
 
-    params = params.set('page', filters.page ?? 1);
-    params = params.set('pageSize', filters.pageSize ?? 100);
+    params = params.set('pageSize', filters.pageSize ?? 20);
 
-    return this.http.get<PagedResult<JobApplication>>(ApplicationConfig.LIST, { params });
+    return this.http.get<CursorPagedResult<JobApplication>>(ApplicationConfig.LIST, { params });
   }
 
   getApplication(id: number): Observable<JobApplicationDetail> {

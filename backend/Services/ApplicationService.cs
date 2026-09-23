@@ -1,3 +1,4 @@
+using System.Text;
 using JobTracker.Api.Data;
 using JobTracker.Api.DTOs;
 using JobTracker.Api.Models;
@@ -7,9 +8,9 @@ namespace JobTracker.Api.Services;
 
 public class ApplicationService(AppDbContext db) : IApplicationService
 {
-    public async Task<PagedResult<ApplicationDto>> GetApplicationsAsync(
+    public async Task<CursorPagedResult<ApplicationDto>> GetApplicationsAsync(
         string userId, ApplicationStatus? status, string? search, string? tag,
-        DateTime? fromDate, DateTime? toDate, int page, int pageSize)
+        DateTime? fromDate, DateTime? toDate, string? cursor, int pageSize)
     {
         var query = db.Applications.Where(a => a.UserId == userId);
 
@@ -33,19 +34,57 @@ public class ApplicationService(AppDbContext db) : IApplicationService
         if (toDate.HasValue)
             query = query.Where(a => a.AppliedDate <= toDate.Value);
 
-        var totalCount = await query.CountAsync();
-
-        page = Math.Max(page, 1);
         pageSize = pageSize is <= 0 or > 100 ? 20 : pageSize;
+
+        var cursorValue = DecodeCursor(cursor);
+        if (cursorValue.HasValue)
+        {
+            var (cursorLastUpdated, cursorId) = cursorValue.Value;
+            query = query.Where(a =>
+                a.LastUpdated < cursorLastUpdated ||
+                (a.LastUpdated == cursorLastUpdated && a.Id < cursorId));
+        }
 
         var items = await query
             .OrderByDescending(a => a.LastUpdated)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
+            .ThenByDescending(a => a.Id)
+            .Take(pageSize + 1)
             .Select(a => ToDto(a))
             .ToListAsync();
 
-        return new PagedResult<ApplicationDto>(items, totalCount, page, pageSize);
+        var hasMore = items.Count > pageSize;
+        if (hasMore)
+            items.RemoveAt(items.Count - 1);
+
+        var nextCursor = hasMore ? EncodeCursor(items[^1].LastUpdated, items[^1].Id) : null;
+
+        return new CursorPagedResult<ApplicationDto>(items, nextCursor, hasMore);
+    }
+
+    private static string EncodeCursor(DateTime lastUpdated, int id) =>
+        Convert.ToBase64String(Encoding.UTF8.GetBytes($"{lastUpdated.Ticks}:{id}"));
+
+    private static (DateTime LastUpdated, int Id)? DecodeCursor(string? cursor)
+    {
+        if (string.IsNullOrWhiteSpace(cursor)) return null;
+
+        try
+        {
+            var parts = Encoding.UTF8.GetString(Convert.FromBase64String(cursor)).Split(':');
+            if (parts.Length != 2) return null;
+
+            var ticks = long.Parse(parts[0]);
+            var id = int.Parse(parts[1]);
+            return (new DateTime(ticks, DateTimeKind.Utc), id);
+        }
+        catch (FormatException)
+        {
+            return null;
+        }
+        catch (OverflowException)
+        {
+            return null;
+        }
     }
 
     public async Task<ApplicationDetailDto?> GetApplicationByIdAsync(string userId, int id)

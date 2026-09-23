@@ -99,11 +99,10 @@ export interface UpdateStatusRequest {
   note?: string | null;
 }
 
-export interface PagedResult<T> {
+export interface CursorPagedResult<T> {
   items: T[];
-  totalCount: number;
-  page: number;
-  pageSize: number;
+  nextCursor: string | null;
+  hasMore: boolean;
 }
 
 export interface Contact {

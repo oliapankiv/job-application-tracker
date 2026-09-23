@@ -72,4 +72,16 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="viewApplication(row)" class="app-table__row"></tr>
   </table>
+
+  @if (hasMore()) {
+    <div class="list-load-more">
+      <button mat-stroked-button [disabled]="loadingMore()" (click)="loadMore()">
+        @if (loadingMore()) {
+          <mat-spinner diameter="18"></mat-spinner>
+        } @else {
+          Load more
+        }
+      </button>
+    </div>
+  }
 }
