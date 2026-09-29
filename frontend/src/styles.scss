@@ -1,25 +1,37 @@
 @use '@angular/material' as mat;
 
+// `theme-type: color-scheme` emits light-dark() values, so the active theme
+// follows the CSS `color-scheme` property set below (see ThemeService).
 html {
+  color-scheme: light dark;
+
   @include mat.theme((
     color: (
-      theme-type: light,
+      theme-type: color-scheme,
       primary: mat.$azure-palette,
       tertiary: mat.$blue-palette,
     ),
     typography: Roboto,
     density: 0,
   ));
+
+  &.theme-light {
+    color-scheme: light;
+  }
+
+  &.theme-dark {
+    color-scheme: dark;
+  }
 }
 
 html, body {
   height: 100%;
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background: #f5f6fa;
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface);
 }
 
 * {
   box-sizing: border-box;
 }
-

@@ -4,7 +4,7 @@
 
 .home-header__subtitle {
   margin: 4px 0 0;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .page-title {
@@ -37,12 +37,12 @@
 .stat-tile__value {
   font-size: 28px;
   font-weight: 700;
-  color: #1a1a19;
+  color: var(--mat-sys-on-surface);
 }
 
 .stat-tile__label {
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .chart-grid {
@@ -65,6 +65,6 @@
 }
 
 .chart-card__empty {
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--mat-sys-on-surface-variant);
   font-size: 14px;
 }

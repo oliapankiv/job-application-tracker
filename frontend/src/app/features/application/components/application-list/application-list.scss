@@ -33,14 +33,14 @@
 }
 
 .list-empty {
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--mat-sys-on-surface-variant);
   padding: 40px 0;
   text-align: center;
 }
 
 .app-table {
   width: 100%;
-  background: white;
+  background: var(--mat-sys-surface);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -49,7 +49,7 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 4%, transparent);
   }
 }
 

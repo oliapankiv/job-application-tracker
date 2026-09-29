@@ -7,27 +7,27 @@
   white-space: nowrap;
 
   &.status-badge--applied {
-    background: #e3edff;
-    color: #2952cc;
+    background: light-dark(#e3edff, #1c2d57);
+    color: light-dark(#2952cc, #aac4ff);
   }
 
   &.status-badge--screening {
-    background: #fff4d6;
-    color: #a56a00;
+    background: light-dark(#fff4d6, #4a3700);
+    color: light-dark(#a56a00, #ffd98a);
   }
 
   &.status-badge--interview {
-    background: #e6dcff;
-    color: #6832d6;
+    background: light-dark(#e6dcff, #35226b);
+    color: light-dark(#6832d6, #cfbcff);
   }
 
   &.status-badge--offer {
-    background: #dcf7e3;
-    color: #1f8a3d;
+    background: light-dark(#dcf7e3, #133d20);
+    color: light-dark(#1f8a3d, #9be3ad);
   }
 
   &.status-badge--rejected {
-    background: #fde2e2;
-    color: #c62828;
+    background: light-dark(#fde2e2, #5c1616);
+    color: light-dark(#c62828, #ffb4ab);
   }
 }

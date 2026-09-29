@@ -6,7 +6,7 @@
   width: 240px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 1px solid var(--mat-sys-outline-variant);
 }
 
 .shell__brand {
@@ -19,13 +19,13 @@
 }
 
 .active-link {
-  background: rgba(63, 81, 181, 0.08);
-  color: #3f51b5;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-primary);
 }
 
 .shell__toolbar {
-  background: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--mat-sys-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .shell__spacer {
@@ -35,11 +35,15 @@
 .shell__user {
   margin-right: 8px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .shell__content {
   padding: 24px;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.shell__theme-check {
+  margin: 0 0 0 16px;
 }

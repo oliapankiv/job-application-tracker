@@ -20,6 +20,20 @@
       @if (authService.currentUser(); as user) {
         <span class="shell__user">{{ user.displayName || user.email }}</span>
       }
+      <button mat-icon-button [matMenuTriggerFor]="themeMenu" aria-label="Change theme">
+        <mat-icon>{{ currentThemeIcon() }}</mat-icon>
+      </button>
+      <mat-menu #themeMenu="matMenu">
+        @for (option of themeOptions; track option.mode) {
+          <button mat-menu-item (click)="themeService.setMode(option.mode)">
+            <mat-icon>{{ option.icon }}</mat-icon>
+            <span>{{ option.label }}</span>
+            @if (themeService.mode() === option.mode) {
+              <mat-icon class="shell__theme-check">check</mat-icon>
+            }
+          </button>
+        }
+      </mat-menu>
       <button mat-icon-button (click)="logout()" aria-label="Log out">
         <mat-icon>logout</mat-icon>
       </button>
