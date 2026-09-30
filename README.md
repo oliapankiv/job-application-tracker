@@ -86,6 +86,14 @@ The app is served at `http://localhost:4200` and calls the API at `http://localh
 
 Open `http://localhost:4200`, register an account, and start adding applications.
 
+## Running tests
+
+Backend unit tests live in `tests/JobTracker.Api.Tests` (xUnit v3 + Moq). Services run against the EF Core InMemory provider, and controllers are tested with mocked services, so no database is needed:
+
+```bash
+dotnet test --project tests/JobTracker.Api.Tests
+```
+
 ## Configuration notes
 
 - **JWT signing key**: `backend/appsettings.json` ships with a placeholder `Jwt:Key`. Replace it with a long random secret before deploying anywhere beyond local dev.
